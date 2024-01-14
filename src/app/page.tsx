@@ -1,95 +1,97 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+
+import Matter, { Sleeping } from "matter-js";
+import { useEffect, useRef } from "react";
+import HomeItem from "./components/home-item";
+import getShapes from "./helpers/get-shapes";
+import windowDimensions from "./helpers/window-dimensions";
+import styles from "./page.module.css";
+
+const BOUNDS_WIDTH = 1000;
 
 export default function Home() {
+  const { width, height } = windowDimensions();
+  const engineRef = useRef(
+    Matter.Engine.create({
+      enableSleeping: true,
+    })
+  );
+  const shapes = useRef([...getShapes()]);
+
+  console.log({ shapes });
+
+  useEffect(() => {
+    console.log("Initialise engine");
+
+    const runner = Matter.Runner.create();
+    Matter.Runner.run(runner, engineRef.current);
+
+    return () => {
+      console.log("Reset engine");
+      Matter.World.clear(engineRef.current.world, false);
+      Matter.Engine.clear(engineRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("Initialise bounds");
+
+    const rect = Matter.Bodies.rectangle;
+    const opts = { isStatic: true };
+    const bounds = [
+      /* top    */ rect(
+        width / 2,
+        -BOUNDS_WIDTH / 2,
+        width,
+        BOUNDS_WIDTH,
+        opts
+      ),
+      /* right  */ rect(
+        width + BOUNDS_WIDTH / 2,
+        height / 2,
+        BOUNDS_WIDTH,
+        height,
+        opts
+      ),
+      /* bottom */ rect(
+        width / 2,
+        height + BOUNDS_WIDTH / 2,
+        width,
+        BOUNDS_WIDTH,
+        opts
+      ),
+      /* left   */ rect(
+        -BOUNDS_WIDTH / 2,
+        height / 2,
+        BOUNDS_WIDTH,
+        height,
+        opts
+      ),
+    ];
+
+    Matter.Composite.add(engineRef.current.world, bounds);
+
+    // When bound change, reawaken all bodies to ennsure they react
+    engineRef.current.world.bodies.forEach((b) => Sleeping.set(b, false));
+
+    return () => {
+      console.log("Remove bounds");
+
+      Matter.Composite.remove(engineRef.current.world, bounds);
+    };
+  }, [width, height]);
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+      {shapes.current.map((shape) => (
+        <HomeItem
+          key={shape.key}
+          shape={shape.type}
+          engine={engineRef.current}
+          x={shape.x}
+          y={shape.y}
         />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      ))}
     </main>
-  )
+  );
 }
