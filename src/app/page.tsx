@@ -1,16 +1,18 @@
 "use client";
 
-import Matter, { Sleeping } from "matter-js";
 import { useEffect, useRef } from "react";
-import HomeItem from "./components/home-item";
+import accelerometer from "./helpers/accelerometer";
 import getShapes from "./helpers/get-shapes";
-import windowDimensions from "./helpers/window-dimensions";
+import getWorldBounds from "./helpers/get-world-bounds";
+import HomeItem from "./components/home-item";
+import Matter, { Sleeping } from "matter-js";
 import styles from "./page.module.css";
-
-const BOUNDS_WIDTH = 1000;
+import windowDimensions from "./helpers/window-dimensions";
 
 export default function Home() {
   const { width, height } = windowDimensions();
+  const { x, y } = accelerometer();
+
   const engineRef = useRef(
     Matter.Engine.create({
       enableSleeping: true,
@@ -36,43 +38,13 @@ export default function Home() {
   useEffect(() => {
     console.log("Initialise bounds");
 
-    const rect = Matter.Bodies.rectangle;
-    const opts = { isStatic: true };
-    const bounds = [
-      /* top    */ rect(
-        width / 2,
-        -BOUNDS_WIDTH / 2,
-        width,
-        BOUNDS_WIDTH,
-        opts
-      ),
-      /* right  */ rect(
-        width + BOUNDS_WIDTH / 2,
-        height / 2,
-        BOUNDS_WIDTH,
-        height,
-        opts
-      ),
-      /* bottom */ rect(
-        width / 2,
-        height + BOUNDS_WIDTH / 2,
-        width,
-        BOUNDS_WIDTH,
-        opts
-      ),
-      /* left   */ rect(
-        -BOUNDS_WIDTH / 2,
-        height / 2,
-        BOUNDS_WIDTH,
-        height,
-        opts
-      ),
-    ];
-
+    const bounds = getWorldBounds(width, height);
     Matter.Composite.add(engineRef.current.world, bounds);
 
-    // When bound change, reawaken all bodies to ennsure they react
-    engineRef.current.world.bodies.forEach((b) => Sleeping.set(b, false));
+    // When bound change, reawaken all bodies to ensure they react
+    engineRef.current.world.bodies.forEach(
+      (b) => b.isSleeping && Sleeping.set(b, false)
+    );
 
     return () => {
       console.log("Remove bounds");
@@ -80,6 +52,18 @@ export default function Home() {
       Matter.Composite.remove(engineRef.current.world, bounds);
     };
   }, [width, height]);
+
+  useEffect(() => {
+    console.log("Update gravity", { x, y });
+
+    engineRef.current.gravity.x = x;
+    engineRef.current.gravity.y = y;
+
+    // When gravity changes, reawaken all bodies to ensure they react
+    engineRef.current.world.bodies.forEach(
+      (b) => b.isSleeping && Sleeping.set(b, false)
+    );
+  }, [x, y]);
 
   return (
     <main className={styles.main}>
