@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function windowDimensions() {
+export default function useWindowDimensions() {
   const [width, setWidth] = React.useState(window.innerWidth);
   const [height, setHeight] = React.useState(window.innerHeight);
 

@@ -21,18 +21,20 @@ export default function HomeItem(props: HomeItemProps) {
   console.log("Render HomeItem");
 
   useEffect(() => {
-    console.log("Add body", { x, y });
-    Matter.Composite.add(props.engine.world, bodyRef.current);
+    console.log("Add body");
+    const body = bodyRef.current;
+
+    Matter.Composite.add(props.engine.world, body);
 
     let animationFrameId: number;
 
     const render = () => {
       animationFrameId = requestAnimationFrame(() => {
-        if (bodyRef.current && !bodyRef.current.isSleeping) {
+        if (!body.isSleeping) {
           console.log("Update body");
-          setX(bodyRef.current.position.x);
-          setY(bodyRef.current.position.y);
-          setRotation(bodyRef.current.angle);
+          setX(body.position.x);
+          setY(body.position.y);
+          setRotation(body.angle);
         }
 
         render();
@@ -44,9 +46,9 @@ export default function HomeItem(props: HomeItemProps) {
     return () => {
       console.log("Destroy body");
       cancelAnimationFrame(animationFrameId);
-      Matter.Composite.remove(props.engine.world, bodyRef.current);
+      Matter.Composite.remove(props.engine.world, body);
     };
-  }, []);
+  }, [props.engine.world]);
 
   return (
     <div
