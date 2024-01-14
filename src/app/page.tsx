@@ -8,8 +8,9 @@ import HomeItem from "./components/home-item";
 import Matter, { Sleeping } from "matter-js";
 import styles from "./page.module.css";
 import useWindowDimensions from "./hooks/use-window-dimensions";
+import dynamic from "next/dynamic";
 
-export default function Home() {
+function Home() {
   const { width, height } = useWindowDimensions();
   const { x, y } = useAccelerometer();
 
@@ -78,3 +79,7 @@ export default function Home() {
     </main>
   );
 }
+
+export default dynamic(() => Promise.resolve(Home), {
+  ssr: false,
+});
