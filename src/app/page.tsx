@@ -58,7 +58,7 @@ function Home() {
     console.log("Update gravity", { x, y });
     const engine = engineRef.current;
 
-    engine.gravity.x = x;
+    engine.gravity.x = -x;
     engine.gravity.y = y;
 
     // When gravity changes, reawaken all bodies to ensure they react
