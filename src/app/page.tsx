@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import getShapes from "./helpers/get-shapes";
 import getWorldBounds from "./helpers/get-world-bounds";
 import HomeItem from "./components/home-item";
@@ -9,7 +9,6 @@ import styles from "./page.module.css";
 
 export default function Home() {
   const shapes = useRef(getShapes());
-  const [orientation, setOrientation] = useState("");
 
   useEffect(() => {
     console.log("Initialise engine");
@@ -82,7 +81,6 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <p>{orientation}</p>
       {shapes.current.map((shape) => (
         <HomeItem
           key={shape.key}
