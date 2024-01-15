@@ -62,8 +62,8 @@ export default function Home() {
       if (acceleration) {
         const x = (acceleration.x ?? 0) * 0.1;
         const y = (acceleration.y ?? 0) * 0.1;
-        engine.gravity.x = isRotated ? (isInverted ? -y : y) : x;
-        engine.gravity.y = isRotated ? x : isInverted ? -y : y;
+        engine.gravity.x = isRotated ? (isInverted ? y : -y) : -x;
+        engine.gravity.y = isRotated ? x : isInverted ? y : -y;
       }
 
       // When bound change, reawaken all bodies to ensure they react
@@ -95,6 +95,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <p>{window.screen.orientation.type}</p>
       {shapes.current.map((shape) => (
         <HomeItem
           key={shape.key}

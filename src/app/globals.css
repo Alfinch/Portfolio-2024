@@ -2,5 +2,11 @@
 
 html {
   font-size: 10px;
+  font-family: sans-serif;
   background-color: rgb(80, 80, 80);
+  color: white;
+}
+
+p {
+  font-size: 1.6rem;
 }
