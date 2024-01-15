@@ -48,14 +48,11 @@ export default function Home() {
 
     console.log("Begin listening to screen orientation");
 
-    let isInverted = false;
-    let isRotated = false;
+    let orientation = 0;
     const updateOrientation = () => {
       console.log("Update orientation");
-      const orientation = window.orientation;
+      orientation = window.orientation;
       setOrientation(orientation);
-      isInverted = orientation === 90 || orientation === 180;
-      isRotated = orientation === -90 || orientation === 90;
     };
     window.screen.orientation.addEventListener("change", updateOrientation);
     updateOrientation();
@@ -70,14 +67,13 @@ export default function Home() {
         let x = (acceleration.x ?? 0) * -0.1;
         let y = (acceleration.y ?? 0) * 0.1;
 
-        if (isRotated) {
-          [x, y] = [y, x];
-
-          if (isInverted) {
-            y = -y;
-          }
-        } else if (isInverted) {
-          x = -x;
+        switch (orientation) {
+          case -90:
+            [x, y] = [y, x];
+          case 90:
+            [x, y] = [y, x];
+          case 180:
+            [x, y] = [-x, -y];
         }
 
         engine.gravity.x = x;
