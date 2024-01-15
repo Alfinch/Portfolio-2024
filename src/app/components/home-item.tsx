@@ -7,7 +7,7 @@ import styles from "../page.module.css";
 import { ShapeType } from "../types/shape-type";
 
 interface HomeItemProps {
-  engine: Matter.Engine;
+  body: Matter.Body;
   shape: ShapeType;
   x: number;
   y: number;
@@ -17,14 +17,11 @@ export default function HomeItem(props: HomeItemProps) {
   const [x, setX] = useState(props.x);
   const [y, setY] = useState(props.y);
   const [rotation, setRotation] = useState(0);
-  const bodyRef = useRef(getBody(props.shape, x, y));
   console.log("Render HomeItem");
 
   useEffect(() => {
-    console.log("Add body");
-    const body = bodyRef.current;
-
-    Matter.Composite.add(props.engine.world, body);
+    console.log("Begin animating home item");
+    const body = props.body;
 
     let animationFrameId: number;
 
@@ -44,11 +41,10 @@ export default function HomeItem(props: HomeItemProps) {
     render();
 
     return () => {
-      console.log("Destroy body");
+      console.log("Stop animating home item");
       cancelAnimationFrame(animationFrameId);
-      Matter.Composite.remove(props.engine.world, body);
     };
-  }, [props.engine.world]);
+  }, [props.body]);
 
   return (
     <div

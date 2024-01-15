@@ -1,69 +1,74 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import useAccelerometer from "./hooks/use-accelerometer";
 import getShapes from "./helpers/get-shapes";
 import getWorldBounds from "./helpers/get-world-bounds";
 import HomeItem from "./components/home-item";
-import Matter, { Sleeping } from "matter-js";
+import Matter, { Composite, Sleeping } from "matter-js";
 import styles from "./page.module.css";
-import useWindowDimensions from "./hooks/use-window-dimensions";
-import dynamic from "next/dynamic";
 
-function Home() {
-  const { width, height } = useWindowDimensions();
-  const { x, y } = useAccelerometer();
-
-  const engineRef = useRef(
-    Matter.Engine.create({
-      enableSleeping: true,
-    })
-  );
-  const shapes = useRef([...getShapes()]);
-
-  console.log({ shapes });
+export default function Home() {
+  const shapes = useRef(getShapes());
 
   useEffect(() => {
     console.log("Initialise engine");
-    const engine = engineRef.current;
+
+    const engine = Matter.Engine.create({
+      enableSleeping: true,
+    });
+
+    Composite.add(engine.world, shapes.current.map(s => s.body));
 
     const runner = Matter.Runner.create();
     Matter.Runner.run(runner, engine);
+
+    console.log("Begin listening to window resize");
+
+    let bounds: Matter.Body[];
+    const updateBounds = () => {
+      if (bounds) {
+        Matter.Composite.remove(engine.world, bounds);
+      }
+      bounds = getWorldBounds(window.innerWidth, window.innerHeight);
+      Matter.Composite.add(engine.world, bounds);
+
+      // When bound change, reawaken all bodies to ensure they react
+      engine.world.bodies.forEach(
+        (b) => b.isSleeping && Sleeping.set(b, false)
+      );
+    };
+    window.addEventListener("resize", updateBounds);
+    updateBounds();
+
+    console.log("Begin listening to accelerometer");
+
+    const updateGravity = (event: DeviceMotionEvent) => {
+      const acceleration = event.accelerationIncludingGravity;
+      if (acceleration) {
+        engine.gravity.x = -(acceleration.x ?? 0) / 10;
+        engine.gravity.y = (acceleration.y ?? 0) / 10;
+      }
+
+      // When bound change, reawaken all bodies to ensure they react
+      engine.world.bodies.forEach(
+        (b) => b.isSleeping && Sleeping.set(b, false)
+      );
+    };
+    window.addEventListener("devicemotion", updateGravity, true);
+    updateGravity({ acceleration: { x: 0, y: 1 } } as DeviceMotionEvent);
 
     return () => {
       console.log("Reset engine");
       Matter.World.clear(engine.world, false);
       Matter.Engine.clear(engine);
+
+      console.log("Stop listening to window resize");
+      window.removeEventListener("resize", updateBounds);
+
+      console.log("Stop listening to accelerometer");
+      window.removeEventListener("devicemotion", updateGravity);
     };
   }, []);
-
-  useEffect(() => {
-    console.log("Initialise bounds");
-    const engine = engineRef.current;
-
-    const bounds = getWorldBounds(width, height);
-    Matter.Composite.add(engine.world, bounds);
-
-    // When bound change, reawaken all bodies to ensure they react
-    engine.world.bodies.forEach((b) => b.isSleeping && Sleeping.set(b, false));
-
-    return () => {
-      console.log("Remove bounds");
-
-      Matter.Composite.remove(engine.world, bounds);
-    };
-  }, [width, height]);
-
-  useEffect(() => {
-    console.log("Update gravity", { x, y });
-    const engine = engineRef.current;
-
-    engine.gravity.x = -x;
-    engine.gravity.y = y;
-
-    // When gravity changes, reawaken all bodies to ensure they react
-    engine.world.bodies.forEach((b) => b.isSleeping && Sleeping.set(b, false));
-  }, [x, y]);
 
   return (
     <main className={styles.main}>
@@ -71,7 +76,7 @@ function Home() {
         <HomeItem
           key={shape.key}
           shape={shape.type}
-          engine={engineRef.current}
+          body={shape.body}
           x={shape.x}
           y={shape.y}
         />
@@ -79,7 +84,3 @@ function Home() {
     </main>
   );
 }
-
-export default dynamic(() => Promise.resolve(Home), {
-  ssr: false,
-});
