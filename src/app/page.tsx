@@ -72,11 +72,12 @@ export default function Home() {
 
         if (isRotated) {
           [x, y] = [y, x];
-        }
 
-        if (isInverted) {
+          if (isInverted) {
+            y = -y;
+          }
+        } else if (isInverted) {
           x = -x;
-          y = -y;
         }
 
         engine.gravity.x = x;
