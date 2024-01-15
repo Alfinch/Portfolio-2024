@@ -44,7 +44,7 @@ export default function Home() {
     updateBounds();
 
     console.log("Lock screen orientation");
-    window.screen.orientation.lock("any");
+    window.screen.orientation["lock"]("any");
 
     console.log("Begin listening to accelerometer");
 
@@ -72,7 +72,7 @@ export default function Home() {
       window.removeEventListener("resize", updateBounds);
 
       console.log("Unlock screen orientation");
-      window.screen.orientation.unlock();
+      window.screen.orientation["unlock"]();
 
       console.log("Stop listening to accelerometer");
       window.removeEventListener("devicemotion", updateGravity);
