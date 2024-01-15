@@ -71,7 +71,7 @@ export default function Home() {
           case -90:
             [x, y] = [y, x];
           case 90:
-            [x, y] = [y, x];
+            [x, y] = [-y, x];
           case 180:
             [x, y] = [-x, -y];
         }
