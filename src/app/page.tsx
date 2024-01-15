@@ -30,6 +30,8 @@ export default function Home() {
 
     let bounds: Matter.Body[];
     const updateBounds = () => {
+      console.log("Update bounds");
+
       if (bounds) {
         Matter.Composite.remove(engine.world, bounds);
       }
@@ -49,9 +51,10 @@ export default function Home() {
     let isInverted = false;
     let isRotated = false;
     const updateOrientation = () => {
+      console.log("Update orientation");
       const orientation = window.orientation;
       setOrientation(orientation);
-      isInverted = orientation === -90 || orientation === 180;
+      isInverted = orientation === 90 || orientation === 180;
       isRotated = orientation === -90 || orientation === 90;
     };
     window.screen.orientation.addEventListener("change", updateOrientation);
@@ -60,6 +63,8 @@ export default function Home() {
     console.log("Begin listening to accelerometer");
 
     const updateGravity = (event: DeviceMotionEvent) => {
+      console.log("Update gravity");
+
       const acceleration = event.accelerationIncludingGravity;
       if (acceleration) {
         let x = (acceleration.x ?? 0) * -0.1;
