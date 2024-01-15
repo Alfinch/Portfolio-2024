@@ -17,7 +17,6 @@ export default function HomeItem(props: HomeItemProps) {
   const [x, setX] = useState(props.x);
   const [y, setY] = useState(props.y);
   const [rotation, setRotation] = useState(0);
-  console.log("Render HomeItem");
 
   useEffect(() => {
     console.log("Begin animating home item");

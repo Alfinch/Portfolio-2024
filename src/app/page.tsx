@@ -17,7 +17,10 @@ export default function Home() {
       enableSleeping: true,
     });
 
-    Composite.add(engine.world, shapes.current.map(s => s.body));
+    Composite.add(
+      engine.world,
+      shapes.current.map((s) => s.body)
+    );
 
     const runner = Matter.Runner.create();
     Matter.Runner.run(runner, engine);
@@ -40,13 +43,27 @@ export default function Home() {
     window.addEventListener("resize", updateBounds);
     updateBounds();
 
+    console.log("Begin listening to screen orientation");
+
+    let isRotated = false;
+    let isInverted = false;
+    const updateOrientation = () => {
+      const orientation = window.screen.orientation.type;
+      isRotated = /^landscape/.test(orientation);
+      isInverted = /secondary$/.test(orientation);
+    };
+    window.screen.orientation.addEventListener("change", updateOrientation);
+    updateOrientation();
+
     console.log("Begin listening to accelerometer");
 
     const updateGravity = (event: DeviceMotionEvent) => {
       const acceleration = event.accelerationIncludingGravity;
       if (acceleration) {
-        engine.gravity.x = -(acceleration.x ?? 0) / 10;
-        engine.gravity.y = (acceleration.y ?? 0) / 10;
+        const x = (acceleration.x ?? 0) * 0.1;
+        const y = (acceleration.y ?? 0) * 0.1;
+        engine.gravity.x = isRotated ? (isInverted ? -y : y) : x;
+        engine.gravity.y = isRotated ? x : isInverted ? -y : y;
       }
 
       // When bound change, reawaken all bodies to ensure they react
@@ -64,6 +81,12 @@ export default function Home() {
 
       console.log("Stop listening to window resize");
       window.removeEventListener("resize", updateBounds);
+
+      console.log("Stop listening to screen orientation");
+      window.screen.orientation.removeEventListener(
+        "change",
+        updateOrientation
+      );
 
       console.log("Stop listening to accelerometer");
       window.removeEventListener("devicemotion", updateGravity);
