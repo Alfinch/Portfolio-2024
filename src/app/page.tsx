@@ -44,28 +44,16 @@ export default function Home() {
     window.addEventListener("resize", updateBounds);
     updateBounds();
 
-    console.log("Begin listening to screen orientation");
-
-    let isRotated = false;
-    let isInverted = false;
-    const updateOrientation = () => {
-      const orientation = window.screen.orientation.type;
-      setOrientation(orientation);
-      isRotated = /^landscape/.test(orientation);
-      isInverted = /secondary$/.test(orientation);
-    };
-    window.screen.orientation.addEventListener("change", updateOrientation);
-    updateOrientation();
+    console.log("Lock screen orientation");
+    window.screen.orientation.lock("any");
 
     console.log("Begin listening to accelerometer");
 
     const updateGravity = (event: DeviceMotionEvent) => {
       const acceleration = event.accelerationIncludingGravity;
       if (acceleration) {
-        const x = (acceleration.x ?? 0) * 0.1;
-        const y = (acceleration.y ?? 0) * 0.1;
-        engine.gravity.x = isRotated ? (isInverted ? y : -y) : -x;
-        engine.gravity.y = isRotated ? x : isInverted ? y : -y;
+        engine.gravity.x = (acceleration.x ?? 0) * -0.1;
+        engine.gravity.y = (acceleration.y ?? 0) * 0.1;
       }
 
       // When bound change, reawaken all bodies to ensure they react
@@ -84,11 +72,8 @@ export default function Home() {
       console.log("Stop listening to window resize");
       window.removeEventListener("resize", updateBounds);
 
-      console.log("Stop listening to screen orientation");
-      window.screen.orientation.removeEventListener(
-        "change",
-        updateOrientation
-      );
+      console.log("Unlock screen orientation");
+      window.screen.orientation.unlock();
 
       console.log("Stop listening to accelerometer");
       window.removeEventListener("devicemotion", updateGravity);

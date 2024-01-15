@@ -6,8 +6,8 @@ export default function getShapes(): HomeItemShape[] {
   const shapes = [];
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 5; j++) {
-      const x = i * 100 + 100;
-      const y = j * 100 + 100;
+      const x = i * 100 + 50;
+      const y = j * 100 + 50;
       const type = [
         ShapeType.square,
         ShapeType.pentagon,
