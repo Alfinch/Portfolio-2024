@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import getShapes from "./helpers/get-shapes";
 import getWorldBounds from "./helpers/get-world-bounds";
 import HomeItem from "./components/home-item";
@@ -9,6 +9,7 @@ import styles from "./page.module.css";
 
 export default function Home() {
   const shapes = useRef(getShapes());
+  const [orientation, setOrientation] = useState(0);
 
   useEffect(() => {
     console.log("Initialise engine");
@@ -43,16 +44,38 @@ export default function Home() {
     window.addEventListener("resize", updateBounds);
     updateBounds();
 
-    console.log("Lock screen orientation");
-    window.screen.orientation["lock"]("any");
+    console.log("Begin listening to screen orientation");
+
+    let isInverted = false;
+    let isRotated = false;
+    const updateOrientation = () => {
+      const orientation = window.orientation;
+      setOrientation(orientation);
+      isInverted = orientation === -90 || orientation === 180;
+      isRotated = orientation === -90 || orientation === 90;
+    };
+    window.screen.orientation.addEventListener("change", updateOrientation);
+    updateOrientation();
 
     console.log("Begin listening to accelerometer");
 
     const updateGravity = (event: DeviceMotionEvent) => {
       const acceleration = event.accelerationIncludingGravity;
       if (acceleration) {
-        engine.gravity.x = (acceleration.x ?? 0) * -0.1;
-        engine.gravity.y = (acceleration.y ?? 0) * 0.1;
+        let x = (acceleration.x ?? 0) * -0.1;
+        let y = (acceleration.y ?? 0) * 0.1;
+
+        if (isRotated) {
+          [x, y] = [y, x];
+        }
+
+        if (isInverted) {
+          x = -x;
+          y = -y;
+        }
+
+        engine.gravity.x = x;
+        engine.gravity.y = y;
       }
 
       // When bound change, reawaken all bodies to ensure they react
@@ -71,8 +94,11 @@ export default function Home() {
       console.log("Stop listening to window resize");
       window.removeEventListener("resize", updateBounds);
 
-      console.log("Unlock screen orientation");
-      window.screen.orientation["unlock"]();
+      console.log("Stop listening to screen orientation");
+      window.screen.orientation.removeEventListener(
+        "change",
+        updateOrientation
+      );
 
       console.log("Stop listening to accelerometer");
       window.removeEventListener("devicemotion", updateGravity);
@@ -81,6 +107,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <p>{orientation}</p>
       {shapes.current.map((shape) => (
         <HomeItem
           key={shape.key}
