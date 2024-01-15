@@ -69,11 +69,14 @@ export default function Home() {
 
         switch (orientation) {
           case -90:
-            [x, y] = [y, x];
+            [x, y] = [y, -x];
+            break;
           case 90:
             [x, y] = [-y, x];
+            break;
           case 180:
             [x, y] = [-x, -y];
+            break;
         }
 
         engine.gravity.x = x;
