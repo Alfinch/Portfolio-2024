@@ -52,3 +52,19 @@
   width: 10rem;
   height: 10rem;
 }
+
+@media screen and (width < 60rem) {
+  .main > h1 {
+    font-size: 2rem;
+    letter-spacing: 0.5rem;
+  }
+
+  .main > h2 {
+    font-size: 1.4rem;
+    letter-spacing: 0.5rem;
+  }
+
+  .main > p {
+    font-size: 1.2rem;
+  }
+}
