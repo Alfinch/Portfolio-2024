@@ -2,11 +2,9 @@
 
 html {
   font-size: 10px;
-  font-family: sans-serif;
-  background-color: rgb(80, 80, 80);
+  font-family: Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url("/background.svg");
+  background-color: #333;
   color: white;
-}
-
-p {
-  font-size: 1.6rem;
+  min-height: 100%;
 }

@@ -157,6 +157,9 @@ export default function Home() {
           </clipPath>
         </defs>
       </svg>
+      <h1>Alfie Woodland</h1>
+      <h2>Full-stack developer</h2>
+      <p>Site under construction</p>
       {shapes.current.map((shape) => (
         <HomeItem
           key={shape.key}
