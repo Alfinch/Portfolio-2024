@@ -6,9 +6,9 @@
 }
 
 .homeItem {
-  top: -10rem;
-  left: -10rem;
+  top: -5rem;
+  left: -5rem;
   position: absolute;
-  width: 20rem;
-  height: 20rem;
+  width: 10rem;
+  height: 10rem;
 }

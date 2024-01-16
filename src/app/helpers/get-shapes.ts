@@ -1,28 +1,28 @@
-import { HomeItemShape } from "../types/home-item-shape";
+import { HomeItemShape, HomeItemShapeConfig } from "../types/home-item-shape";
 import { ShapeType } from "../types/shape-type";
 import getBody from "./get-body";
 
-export default function getShapes(): HomeItemShape[] {
-  const shapes = [];
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 5; j++) {
-      const x = i * 100 + 50;
-      const y = j * 100 + 50;
-      const type = [
-        ShapeType.square,
-        ShapeType.pentagon,
-        ShapeType.hexagon,
-        ShapeType.rectangle,
-        ShapeType.circle,
-      ][(i + j) % 5] as ShapeType;
-      shapes.push({
-        key: crypto.randomUUID(),
-        x,
-        y,
-        body: getBody(type, x, y),
-        type,
-      });
-    }
-  }
-  return shapes;
+const ROWS = 3;
+
+export default function getShapes(
+  config: HomeItemShapeConfig[]
+): HomeItemShape[] {
+  return config.map((c, i) => {
+    const x = (i % ROWS) * 100 + 50;
+    const y = Math.floor(i / ROWS) * 100 + 50;
+    const type = [
+      ShapeType.square,
+      ShapeType.circle,
+      ShapeType.pentagon,
+      ShapeType.hexagon,
+    ][i % 4] as ShapeType;
+    return {
+      ...c,
+      key: crypto.randomUUID(),
+      x,
+      y,
+      body: getBody(type, x, y),
+      type,
+    };
+  });
 }

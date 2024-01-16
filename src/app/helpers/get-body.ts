@@ -14,15 +14,40 @@ export default function getBody(
 
   switch (shape) {
     case ShapeType.square:
-      return Matter.Bodies.rectangle(x, y, 77.1, 77.1, options);
+      return Matter.Bodies.rectangle(x, y, 78, 78, options);
     case ShapeType.pentagon:
-      return Matter.Bodies.polygon(x, y, 5, 50, options);
+      return Matter.Bodies.fromVertices(
+        x,
+        y,
+        [
+          [
+            { x: 79.39, y: 90.45 },
+            { x: 20.61, y: 90.45 },
+            { x: 2.45, y: 34.55 },
+            { x: 50.0, y: 0.0 },
+            { x: 97.55, y: 34.55 },
+          ],
+        ],
+        options
+      );
     case ShapeType.hexagon:
-      return Matter.Bodies.polygon(x, y, 6, 48, options);
-    case ShapeType.rectangle:
-      return Matter.Bodies.rectangle(x + 50, y, 154.2, 38.55, options);
+      return Matter.Bodies.fromVertices(
+        x,
+        y,
+        [
+          [
+            { x: 97.83, y: 50.0 },
+            { x: 73.92, y: 91.42 },
+            { x: 26.08, y: 91.42 },
+            { x: 2.17, y: 50.0 },
+            { x: 26.08, y: 8.58 },
+            { x: 73.92, y: 8.58 },
+          ],
+        ],
+        options
+      );
     case ShapeType.circle:
-      return Matter.Bodies.circle(x, y, 43.5, options, 256);
+      return Matter.Bodies.circle(x, y, 44, options, 256);
     default:
       throw new Error(`Unsupported shape "${ShapeType[shape]}"`);
   }
