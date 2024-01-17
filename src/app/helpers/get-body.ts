@@ -9,7 +9,7 @@ export default function getBody(
   const options = {
     friction: 0.1,
     frictionAir: 0,
-    restitution: 0.8,
+    restitution: 0.5,
   };
 
   switch (shape) {
