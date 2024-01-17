@@ -53,6 +53,9 @@ export default function Home() {
       shapes.current.map((s) => s.body)
     );
 
+    const mouseConstraint = Matter.MouseConstraint.create(engine);
+    Composite.add(engine.world, mouseConstraint);
+
     const runner = Matter.Runner.create();
     Matter.Runner.run(runner, engine);
 
