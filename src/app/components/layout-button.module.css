@@ -1,0 +1,24 @@
+.layoutButton {
+  position: relative;
+  width: 7rem;
+  height: 7rem;
+  background-color: transparent;
+  --icon-background-color: #555;
+  --icon-foreground-color: #888;
+}
+
+.layoutButton:hover,
+.layoutButton.active {
+  --icon-foreground-color: var(--text);
+}
+
+.layoutButton.active {
+  --icon-background-color: var(--primary);
+}
+
+@media screen and (width < 1280px) {
+  .layoutButton {
+    width: 5rem;
+    height: 5rem;
+  }
+}

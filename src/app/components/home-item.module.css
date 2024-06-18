@@ -1,0 +1,17 @@
+.homeItemGhost {
+  width: 10rem;
+  height: 10rem;
+}
+
+.homeItem {
+  position: fixed;
+  top: -5rem;
+  left: -5rem;
+  width: 10rem;
+  height: 10rem;
+  user-select: none;
+}
+
+.easeTransform {
+  transition: transform 200ms ease;
+}

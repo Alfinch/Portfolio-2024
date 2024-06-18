@@ -1,5 +1,6 @@
 import { Viewport } from "next";
 import "./globals.css";
+import styles from "./layout.module.css";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -15,7 +16,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <div className={styles.layout}>
+          <div className={styles.sidePanel}></div>
+          {children}
+          <div className={styles.sidePanel}></div>
+        </div>
+        <div className={styles.modal}>
+          <p className={styles.constructionMessage}>Site under construction</p>
+        </div>
+      </body>
     </html>
   );
 }

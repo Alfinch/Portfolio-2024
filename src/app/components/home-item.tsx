@@ -1,64 +1,99 @@
 "use client";
 
-import Matter from "matter-js";
-import { useEffect, useState } from "react";
-import styles from "../page.module.css";
-import { ShapeType } from "../types/shape-type";
+import { useContext, useEffect, useRef, useState } from "react";
+import styles from "./home-item.module.css";
+import useWindowDimensions from "../hooks/use-window-dimensions";
+import { MatterContext } from "../contexts/matter-context";
+import MatterService from "../services/matter-service";
 
 interface HomeItemProps {
-  body: Matter.Body;
-  shape: ShapeType;
+  id: string;
   url: string;
   image: string;
-  x: number;
-  y: number;
+  physics: boolean;
+  offset: { x: number; y: number };
 }
 
 export default function HomeItem(props: HomeItemProps) {
-  const [x, setX] = useState(props.x);
-  const [y, setY] = useState(props.y);
+  console.log(`Render HomeItem: ${props.id}`);
+
+  const matter = useContext(MatterContext) ?? new MatterService();
+
+  useWindowDimensions(200);
+
+  const bodyRef = useRef<Matter.Body>();
+
+  const [element, setElement] = useState<HTMLDivElement | null>(null);
+  const [ghostElement, setGhostElement] = useState<HTMLDivElement | null>(null);
+  const [dx, setDx] = useState(0);
+  const [dy, setDy] = useState(0);
   const [rotation, setRotation] = useState(0);
 
-  useEffect(() => {
-    console.log("Begin animating home item");
-    const body = props.body;
+  var classes = [styles.homeItem];
+  if (!props.physics) {
+    classes.push(styles.easeTransform);
 
+    if (bodyRef.current !== undefined) {
+      matter.removeBody(bodyRef.current);
+      bodyRef.current = undefined;
+    }
+
+    if (ghostElement !== null) {
+      const { x, y, width, height } = ghostElement.getBoundingClientRect();
+      const newDx = x + width / 2 - props.offset.x;
+      const newDy = y + height / 2 - props.offset.y;
+      if (newDx !== dx || newDy !== dy) {
+        console.log(`Position HomeItem: ${props.id}`);
+        setDx(newDx);
+        setDy(newDy);
+      }
+    }
+  }
+
+  // All physics-related code here!
+  useEffect(() => {
+    if (element === null || !props.physics) return;
+
+    console.log("Start animating home item");
+
+    if (bodyRef.current === undefined) {
+      const { x, y, width, height } = element.getBoundingClientRect();
+      const bodyX = x + width / 2;
+      const bodyY = y + height / 2;
+      bodyRef.current = matter.addBody(bodyX, bodyY);
+    }
+
+    const body = bodyRef.current;
     let animationFrameId: number;
 
-    const render = () => {
-      animationFrameId = requestAnimationFrame(() => {
-        if (!body.isSleeping) {
-          console.log("Update body");
-          setX(body.position.x);
-          setY(body.position.y);
-          setRotation(body.angle);
-        }
-
-        render();
-      });
-    };
-
-    render();
+    if (!body.isSleeping) {
+      console.log("HomeItem Update body");
+      setDx(body.position.x);
+      setDy(body.position.y);
+      setRotation(body.angle);
+    }
 
     return () => {
       console.log("Stop animating home item");
       cancelAnimationFrame(animationFrameId);
     };
-  }, [props.body]);
+  }, [
+    element,
+    props.physics,
+    bodyRef.current?.position.x,
+    bodyRef.current?.position.y,
+    bodyRef.current?.angle,
+    bodyRef.current?.isSleeping,
+  ]);
 
   return (
-    <div
-      className={styles.homeItem}
-      style={{ transform: `translate(${x}px, ${y}px) rotate(${rotation}rad)` }}
-    >
-      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-        <image
-          width="100"
-          height="100"
-          clipPath={"url(#" + ShapeType[props.shape] + ")"}
-          href={props.image}
-        ></image>
-      </svg>
-    </div>
+    <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+      <image
+        width="100"
+        height="100"
+        clipPath={"url(#circle)"}
+        href={props.image}
+      ></image>
+    </svg>
   );
 }
