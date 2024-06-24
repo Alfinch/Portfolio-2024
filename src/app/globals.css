@@ -9,25 +9,121 @@ html {
   box-sizing: inherit;
 }
 
-button {
-  border: none;
-  padding: 0;
-}
-
 html {
   height: 100%;
   font-family: Tahoma, Geneva, Verdana, sans-serif;
   font-size: 10px;
-  background-color: #333;
+  background-color: var(--background);
   color: var(--text);
+
   --text: #ffffff;
   --primary: #7936c9;
   --secondary: #2d9bc0;
-  --focus: #fb3342;
+  --error: #fb3342;
+  --background: #333333;
+  --neutral: #555555;
+  --neutral-foreground: #888888;
 }
 
 body {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+button {
+  border: none;
+  padding: 0;
+}
+
+a {
+  color: color-mix(in srgb, var(--secondary) 80%, var(--text));
+}
+
+a:visited {
+  color: color-mix(in srgb, var(--primary) 60%, var(--text));
+}
+
+ul {
+  list-style: disc;
+  padding-left: 2rem;
+  line-height: 3rem;
+}
+
+.main {
+  position: relative;
+  min-height: 100%;
+  max-width: 128rem;
+  margin: auto;
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 4rem;
+  filter: drop-shadow(0 0.2rem 0.4rem rgba(0, 0, 0, 0.4));
+}
+
+.main > h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1rem;
+  padding: 1.5rem 2rem;
+  background-color: var(--primary);
+}
+
+.main > h2 {
+  font-size: 2rem;
+  letter-spacing: 0.5rem;
+  padding: 1.5rem 2rem;
+  background-color: var(--secondary);
+  margin-bottom: 4rem;
+}
+
+@media screen and (width < 1280px) {
+  .main > h1 {
+    font-size: 2rem;
+    letter-spacing: 0.5rem;
+    padding: 1rem 2rem;
+  }
+
+  .main > h2 {
+    font-size: 1.6rem;
+    letter-spacing: 0.3rem;
+    padding: 1rem 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .main > p {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (width < 640px) {
+  .main {
+    align-items: center;
+  }
+
+  .main > h1 {
+    text-align: center;
+  }
+
+  .main > h2 {
+    text-align: center;
+  }
+}
+
+.article {
+  font-size: 1.6rem;
+  letter-spacing: 0.05rem;
+  line-height: 2rem;
+}
+
+.article > * + * {
+  margin-top: 2rem;
+}
+
+.article > h2 {
+  font-weight: bold;
+  font-size: 2rem;
 }

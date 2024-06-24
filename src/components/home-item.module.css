@@ -1,0 +1,49 @@
+.homeItem {
+  position: relative;
+  border: 1rem solid var(--neutral);
+  transition: border 100ms;
+}
+
+.homeItem > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.homeItemContent {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.homeItemContent > h3 {
+  font-size: 2rem;
+  letter-spacing: 0.4rem;
+  font-weight: bold;
+  text-wrap: balance;
+  color: var(--secondary);
+  text-shadow: 0 0 0.5rem black;
+  transition: color 100ms;
+  padding-bottom: 1rem;
+}
+
+.homeItemContent > h4 {
+  font-size: 1.5rem;
+  letter-spacing: 0.2rem;
+  font-style: italic;
+  text-wrap: balance;
+  color: var(--neutral-foreground);
+  text-shadow: 0 0 0.5rem black;
+  transition: color 100ms;
+}
+
+.homeItem:hover {
+  border: 1rem solid var(--primary);
+}
+
+.homeItem:hover > .homeItemContent > h3 {
+  color: var(--text);
+}

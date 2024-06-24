@@ -1,0 +1,32 @@
+.layoutButton {
+  position: relative;
+  width: 7rem;
+  height: 7rem;
+  background-color: transparent;
+}
+
+@media screen and (width < 1280px) {
+  .layoutButton {
+    width: 5rem;
+    height: 5rem;
+  }
+}
+
+.layoutButton .background {
+  fill: var(--neutral);
+  transition: fill 100ms;
+}
+
+.layoutButton .foreground {
+  fill: var(--neutral-foreground);
+  transition: fill 100ms;
+}
+
+.layoutButton.active .background {
+  fill: var(--primary);
+}
+
+.layoutButton.active .foreground,
+.layoutButton:hover .foreground {
+  fill: var(--text);
+}

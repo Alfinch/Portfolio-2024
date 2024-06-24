@@ -2,15 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
-import LayoutButtons from "./components/layout-buttons";
-import MatterService from "./services/matter-service";
-import EventService, { EventBindings } from "./services/event-service";
-import { LayoutState } from "./types/layout-state";
-import ProjectService from "./services/project-service";
-import { Project } from "./types/project";
-import { MatterContext } from "./contexts/matter-context";
+import LayoutButtons from "../components/layout-buttons";
+import MatterService from "../services/matter-service";
+import EventService, { EventBindings } from "../services/event-service";
+import { LayoutState } from "../types/layout-state";
+import ProjectService from "../services/project-service";
+import { Project } from "../types/project";
+import { MatterContext } from "../contexts/matter-context";
+import HomeItem from "../components/home-item";
 
-export default function Home() {
+export default function HomePage() {
   console.log("Render Home");
 
   const matterRef = useRef(new MatterService());
@@ -73,13 +74,19 @@ export default function Home() {
   }, []);
 
   return (
-    <main ref={(ref) => setElement(ref)} className={styles.main}>
+    <main ref={(ref) => setElement(ref)} className="main">
       <h1>Alfie Woodland</h1>
       <h2>Angular • Next.js • .NET</h2>
       <LayoutButtons onChange={setLayout}></LayoutButtons>
       <MatterContext.Provider value={matterRef.current}>
         <div className={styles.homeItems}>
-          <p>{JSON.stringify(projects)}</p>
+          {projects.map((project) => (
+            <HomeItem
+              key={project.id}
+              project={project}
+              layout={layout}
+            ></HomeItem>
+          ))}
         </div>
       </MatterContext.Provider>
     </main>

@@ -1,0 +1,11 @@
+.main {
+  position: relative;
+  max-width: 128rem;
+  margin: auto;
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 4rem;
+  filter: drop-shadow(0 0.2rem 0.4rem rgba(0, 0, 0, 0.4));
+}

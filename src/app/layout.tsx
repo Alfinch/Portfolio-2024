@@ -22,9 +22,6 @@ export default function RootLayout({
           {children}
           <div className={styles.sidePanel}></div>
         </div>
-        <div className={styles.modal}>
-          <p className={styles.constructionMessage}>Site under construction</p>
-        </div>
       </body>
     </html>
   );

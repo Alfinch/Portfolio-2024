@@ -1,5 +1,5 @@
 export enum LayoutState {
-  List = "list",
   Grid = "grid",
+  List = "list",
   Chaos = "chaos",
 }
