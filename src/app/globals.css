@@ -18,7 +18,7 @@ html {
 
   --text: #ffffff;
   --primary: #7936c9;
-  --secondary: #2d9bc0;
+  --secondary: rgb(35, 120, 148);
   --error: #fb3342;
   --background: #333333;
   --neutral: #555555;
@@ -34,6 +34,8 @@ body {
 button {
   border: none;
   padding: 0;
+  background: none;
+  cursor: pointer;
 }
 
 a {
@@ -54,7 +56,6 @@ ul {
   position: relative;
   min-height: 100%;
   max-width: 128rem;
-  margin: auto;
   flex: 0 0 100%;
   display: flex;
   flex-direction: column;
@@ -117,6 +118,8 @@ ul {
   font-size: 1.6rem;
   letter-spacing: 0.05rem;
   line-height: 2rem;
+  max-width: 64rem;
+  margin: auto;
 }
 
 .article > * + * {

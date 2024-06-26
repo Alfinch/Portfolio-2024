@@ -1,11 +1,57 @@
-.main {
-  position: relative;
-  max-width: 128rem;
-  margin: auto;
-  flex: 0 0 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 4rem;
-  filter: drop-shadow(0 0.2rem 0.4rem rgba(0, 0, 0, 0.4));
+.updateSwitch {
+  display: grid;
+  align-items: center;
+  grid-template:
+    "prev title next" auto
+    "prev subtitle next" auto
+    / 1fr auto 1fr;
+  justify-items: center;
+  max-width: 64rem;
+  margin: 0 auto 2rem;
+}
+
+.updateSwitch > h1 {
+  grid-area: title;
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 0.2rem;
+  margin-bottom: 1rem;
+}
+
+.updateSwitch > h2 {
+  grid-area: subtitle;
+  font-size: 1.6rem;
+  font-style: italic;
+  letter-spacing: 0.2rem;
+  margin: 0;
+  color: var(--neutral-foreground);
+}
+
+.updateSwitch > button {
+  font-size: 1.6rem;
+  color: var(--secondary);
+  padding: 1rem;
+  margin: -1rem;
+}
+
+.updateSwitch > button:first-child {
+  margin-right: 0rem;
+}
+
+.updateSwitch > button:last-child {
+  margin-left: 0rem;
+}
+
+.updateSwitch > button:hover {
+  color: var(--text);
+}
+
+@media screen and (width < 640px) {
+  .updateSwitch {
+    grid-template:
+      "prev next" auto
+      "title title" auto
+      "subtitle subtitle" auto
+      / 1fr 1fr;
+  }
 }

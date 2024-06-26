@@ -19,6 +19,7 @@ export default function LayoutButtons({
     <div className={styles.layoutButtons}>
       <LayoutButton
         active={layoutState === LayoutState.Grid}
+        label="grid"
         onClick={() => setLayout(LayoutState.Grid)}
       >
         <rect className="bg" width="70" height="70" />
@@ -29,6 +30,7 @@ export default function LayoutButtons({
       </LayoutButton>
       <LayoutButton
         active={layoutState === LayoutState.List}
+        label="list"
         onClick={() => setLayout(LayoutState.List)}
       >
         <rect className="bg" width="70" height="70" />
@@ -38,6 +40,7 @@ export default function LayoutButtons({
       </LayoutButton>
       <LayoutButton
         active={layoutState === LayoutState.Chaos}
+        label="chaos"
         onClick={() => setLayout(LayoutState.Chaos)}
       >
         <circle className="bg" cx="20" cy="20" r="20" />

@@ -80,6 +80,9 @@ export default function HomePage() {
       <LayoutButtons onChange={setLayout}></LayoutButtons>
       <MatterContext.Provider value={matterRef.current}>
         <div className={styles.homeItems}>
+          {projects.length === 0 && (
+            <p className={styles.loading}>Loading...</p>
+          )}
           {projects.map((project) => (
             <HomeItem
               key={project.id}

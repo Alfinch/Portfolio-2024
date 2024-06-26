@@ -4,15 +4,18 @@ import styles from "./layout-button.module.css";
 export default function LayoutButton({
   children,
   active,
+  label,
   onClick,
 }: {
   children: React.ReactNode;
   active: boolean;
+  label: string;
   onClick: () => void;
 }) {
   return (
     <button
       type="button"
+      aria-label={"Switch layout to " + label}
       className={styles.layoutButton + (active ? " " + styles.active : "")}
       onClick={onClick}
     >

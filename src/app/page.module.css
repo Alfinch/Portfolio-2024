@@ -25,3 +25,19 @@
     grid-template: auto / 1fr;
   }
 }
+
+.loading {
+  opacity: 0;
+  animation-delay: 1000ms;
+  animation: 200ms linear 1 loading;
+}
+
+@keyframes loading {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
