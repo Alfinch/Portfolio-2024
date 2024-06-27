@@ -1,13 +1,11 @@
 import { Viewport } from "next";
-import { Metadata } from 'next';
+import { Metadata } from "next";
 import "./globals.css";
 import styles from "./layout.module.css";
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export const metadata: Metadata = {
