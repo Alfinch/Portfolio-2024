@@ -81,7 +81,7 @@ export default function HomePage() {
       <MatterContext.Provider value={matterRef.current}>
         <div className={styles.homeItems}>
           {projects.length === 0 && (
-            <p className={styles.loading}>Loading...</p>
+            <p className={styles.loading}>Starting up...</p>
           )}
           {projects.map((project) => (
             <HomeItem

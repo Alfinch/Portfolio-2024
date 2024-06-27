@@ -27,9 +27,9 @@
 }
 
 .loading {
-  opacity: 0;
-  animation-delay: 1000ms;
-  animation: 200ms linear 1 loading;
+  font-size: 1.5rem;
+  color: var(--neutral-foreground);
+  animation: 200ms linear 1s 1 both running loading;
 }
 
 @keyframes loading {
