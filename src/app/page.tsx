@@ -31,6 +31,11 @@ export default function HomePage() {
     }
   }
 
+  // Load data
+  useEffect(() => {
+    ProjectService.getProjects().then((projects) => setProjects(projects));
+  }, []);
+
   useEffect(() => {
     if (element === null || layout !== LayoutState.Chaos) return;
 
@@ -68,10 +73,6 @@ export default function HomePage() {
       matter.destroy();
     };
   }, [element, layout]);
-
-  useEffect(() => {
-    ProjectService.getProjects().then((projects) => setProjects(projects));
-  }, []);
 
   return (
     <main ref={(ref) => setElement(ref)} className="main">

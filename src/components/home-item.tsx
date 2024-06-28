@@ -92,7 +92,9 @@ export default function HomeItem(props: HomeItemProps) {
         <img src="placeholder.jpg" alt={props.project.title} />
         <div className={styles.homeItemContent}>
           <h3>{props.project.title}</h3>
-          <h4>{props.project.startDate.toLocaleDateString()}</h4>
+          {props.project.startDate && (
+            <h4>{props.project.startDate.toLocaleDateString()}</h4>
+          )}
         </div>
       </div>
     </Link>

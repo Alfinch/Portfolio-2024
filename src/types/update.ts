@@ -1,5 +1,5 @@
 export interface Update {
-  id: number;
+  id: string;
   title: string;
   body: string;
   date: Date;
