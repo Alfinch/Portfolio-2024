@@ -4,6 +4,7 @@
   grid-template: auto / 1fr 1fr 1fr;
   justify-items: stretch;
   gap: 2rem;
+  align-self: stretch;
 }
 
 @media screen and (width < 1280px) {
