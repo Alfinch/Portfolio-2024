@@ -1,10 +1,20 @@
 .homeItems {
   margin-top: 4rem;
-  display: grid;
-  grid-template: auto / 1fr 1fr 1fr;
-  justify-items: stretch;
-  gap: 2rem;
   align-self: stretch;
+
+  &.grid {
+    display: grid;
+    grid-template: auto / 1fr 1fr 1fr;
+    justify-items: stretch;
+    gap: 2rem;
+  }
+
+  &.list {
+    display: grid;
+    grid-template: auto / 1fr;
+    justify-items: stretch;
+    gap: 2rem;
+  }
 }
 
 @media screen and (width < 1280px) {
@@ -16,14 +26,20 @@
 @media screen and (width < 960px) {
   .homeItems {
     justify-content: center;
-    grid-template: auto / 1fr 1fr;
+
+    &.grid {
+      grid-template: auto / 1fr 1fr;
+    }
   }
 }
 
 @media screen and (width < 560px) {
   .homeItems {
     justify-content: center;
-    grid-template: auto / 1fr;
+
+    &.grid {
+      grid-template: auto / 1fr;
+    }
   }
 }
 
@@ -31,6 +47,7 @@
   font-size: 1.5rem;
   color: var(--neutral-foreground);
   animation: 200ms linear 1s 1 both running loading;
+  margin-top: 4rem;
 }
 
 @keyframes loading {

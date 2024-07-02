@@ -18,11 +18,14 @@ html {
 
   --text: #ffffff;
   --primary: #7936c9;
+  --primary-text: color-mix(in srgb, var(--primary) 80%, var(--text));
   --secondary: rgb(35, 120, 148);
+  --secondary-text: color-mix(in srgb, var(--secondary) 80%, var(--text));
   --error: #fb3342;
+  --error-text: color-mix(in srgb, var(--error) 80%, var(--text));
   --background: #333333;
   --neutral: #555555;
-  --neutral-foreground: #888888;
+  --neutral-foreground: #aaaaaa;
 }
 
 body {
@@ -60,6 +63,7 @@ ul {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: flex-start;
   padding: 4rem;
   filter: drop-shadow(0 0.2rem 0.4rem rgba(0, 0, 0, 0.4));
 }
@@ -103,6 +107,7 @@ ul {
 @media screen and (width < 640px) {
   .main {
     align-items: center;
+    padding: 4rem 2rem;
   }
 
   .main > h1 {
@@ -119,7 +124,9 @@ ul {
   letter-spacing: 0.05rem;
   line-height: 2rem;
   max-width: 64rem;
-  margin: auto;
+  margin: 0 auto;
+  text-align: justify;
+  text-wrap: pretty;
 }
 
 .article > * + * {

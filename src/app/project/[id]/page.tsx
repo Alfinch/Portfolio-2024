@@ -21,11 +21,21 @@ export default function ProjectPage({ params }: { params: { id: number } }) {
   }
 
   function previous() {
-    if (canGoPrevious()) setCurrentUpdate(currentUpdate - 1);
+    if (canGoPrevious()) {
+      setCurrentUpdate(currentUpdate - 1);
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
   }
 
   function next() {
-    if (canGoNext()) setCurrentUpdate(currentUpdate + 1);
+    if (canGoNext()) {
+      setCurrentUpdate(currentUpdate + 1);
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
   }
 
   useEffect(() => {
@@ -42,10 +52,10 @@ export default function ProjectPage({ params }: { params: { id: number } }) {
     <main className="main">
       <h1>{project?.title}</h1>
       <h2>{project?.description}</h2>
-      <div className={styles.updateSwitch}>
+      <div className={styles.navigation}>
         {canGoPrevious() && (
-          <button type="button" onClick={previous}>
-            &lt; Previous
+          <button type="button" onClick={previous} className={styles.previous}>
+            Previous: {project?.updates[currentUpdate - 1]?.title ?? ""}
           </button>
         )}
         <h1>{project?.updates[currentUpdate]?.title ?? ""}</h1>
@@ -53,8 +63,8 @@ export default function ProjectPage({ params }: { params: { id: number } }) {
           {project?.updates[currentUpdate]?.date.toLocaleDateString() ?? ""}
         </h2>
         {canGoNext() && (
-          <button type="button" onClick={next}>
-            Next &gt;
+          <button type="button" onClick={next} className={styles.next}>
+            Next: {project?.updates[currentUpdate + 1]?.title ?? ""}
           </button>
         )}
       </div>
@@ -64,6 +74,18 @@ export default function ProjectPage({ params }: { params: { id: number } }) {
           __html: project?.updates[currentUpdate]?.body ?? "",
         }}
       ></article>
+      <div className={styles.footNavigation}>
+        {canGoPrevious() && (
+          <button type="button" onClick={previous} className={styles.previous}>
+            Previous: {project?.updates[currentUpdate - 1]?.title ?? ""}
+          </button>
+        )}
+        {canGoNext() && (
+          <button type="button" onClick={next} className={styles.next}>
+            Next: {project?.updates[currentUpdate + 1]?.title ?? ""}
+          </button>
+        )}
+      </div>
     </main>
   );
 }

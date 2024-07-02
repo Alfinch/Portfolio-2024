@@ -87,14 +87,27 @@ export default function HomeItem(props: HomeItemProps) {
   // ]);
 
   return (
-    <Link href={"/project/" + props.project.id}>
-      <div className={styles.homeItem}>
-        <img src="placeholder.jpg" alt={props.project.title} />
+    <Link href={"/project/" + props.project.id} className={styles.homeItemLink}>
+      <div
+        className={`${styles.homeItem} ${
+          { grid: styles.grid, list: styles.list, chaos: styles.chaos }[
+            props.layout
+          ]
+        }`}
+      >
         <div className={styles.homeItemContent}>
-          <h3>{props.project.title}</h3>
-          {props.project.startDate && (
-            <h4>{props.project.startDate.toLocaleDateString()}</h4>
-          )}
+          <img src="placeholder.jpg" alt={"Image for " + props.project.title} />
+          <div className={styles.homeItemSummary}>
+            <h3>{props.project.title}</h3>
+            {props.project.startDate && (
+              <h4>
+                Last updated {props.project.startDate.toLocaleDateString()}
+              </h4>
+            )}
+            {props.layout === LayoutState.List && (
+              <p>{props.project.description}</p>
+            )}
+          </div>
         </div>
       </div>
     </Link>

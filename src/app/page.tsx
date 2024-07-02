@@ -79,11 +79,19 @@ export default function HomePage() {
       <h1>Alfie Woodland</h1>
       <h2>Angular • Next.js • .NET</h2>
       <LayoutButtons onChange={setLayout}></LayoutButtons>
+      {projects.length === 0 && (
+        <p className={styles.loading}>
+          Please be patient as the machine awakens from its deep slumber...
+        </p>
+      )}
       <MatterContext.Provider value={matterRef.current}>
-        <div className={styles.homeItems}>
-          {projects.length === 0 && (
-            <p className={styles.loading}>Starting up...</p>
-          )}
+        <div
+          className={`${styles.homeItems} ${
+            { grid: styles.grid, list: styles.list, chaos: styles.chaos }[
+              layout
+            ]
+          }`}
+        >
           {projects.map((project) => (
             <HomeItem
               key={project.id}
