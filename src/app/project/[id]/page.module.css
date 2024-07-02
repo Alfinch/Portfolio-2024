@@ -7,7 +7,7 @@
 
   & > button {
     font-size: 1.6rem;
-    color: color-mix(in srgb, var(--secondary) 80%, var(--text));
+    color: var(--secondary-text);
     padding: 1rem;
     margin: -1rem;
 

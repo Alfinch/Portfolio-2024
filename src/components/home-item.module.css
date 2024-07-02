@@ -27,7 +27,7 @@
         line-height: 2.5rem;
         font-weight: bold;
         text-wrap: balance;
-        color: var(--secondary);
+        color: var(--secondary-text);
         transition: color 100ms;
       }
 
@@ -52,18 +52,6 @@
     }
   }
 
-  &:hover {
-    & > .homeItemContent {
-      & > .homeItemSummary > h3 {
-        color: var(--text);
-      }
-
-      & > img {
-        border: 1rem solid var(--primary);
-      }
-    }
-  }
-
   &.grid {
     & > .homeItemContent {
       & > img {
@@ -74,7 +62,7 @@
         position: absolute;
         inset: auto 1rem 1rem;
         padding: 2rem;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.7);
       }
     }
   }
@@ -101,12 +89,24 @@
         min-height: 0;
         height: 100%;
         overflow: hidden;
-  
+
         & > p {
           min-height: 0;
           overflow: hidden;
           text-overflow: ellipsis;
         }
+      }
+    }
+  }
+
+  &:hover {
+    & > .homeItemContent {
+      & > .homeItemSummary > h3 {
+        color: var(--text);
+      }
+
+      & > img {
+        border: 1rem solid var(--primary);
       }
     }
   }

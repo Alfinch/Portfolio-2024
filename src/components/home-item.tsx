@@ -99,9 +99,12 @@ export default function HomeItem(props: HomeItemProps) {
           <img src="placeholder.jpg" alt={"Image for " + props.project.title} />
           <div className={styles.homeItemSummary}>
             <h3>{props.project.title}</h3>
-            {props.project.startDate && (
+            {props.project.firstUpdated && (
               <h4>
-                Last updated {props.project.startDate.toLocaleDateString()}
+                <span>Started {props.project.firstUpdated.toLocaleDateString()}</span>
+                {props.layout === LayoutState.Grid && (<br />)}
+                {props.layout === LayoutState.List && " - "}
+                <span>Updated {props.project.lastUpdated.toLocaleDateString()}</span>
               </h4>
             )}
             {props.layout === LayoutState.List && (

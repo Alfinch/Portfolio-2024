@@ -42,11 +42,11 @@ button {
 }
 
 a {
-  color: color-mix(in srgb, var(--secondary) 80%, var(--text));
+  color: var(--secondary-text);
 }
 
 a:visited {
-  color: color-mix(in srgb, var(--primary) 60%, var(--text));
+  color: var(--primary-text);
 }
 
 ul {

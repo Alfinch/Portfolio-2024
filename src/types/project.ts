@@ -5,6 +5,7 @@ export interface Project {
   title: string;
   description: string;
   image: string;
-  startDate: Date;
+  firstUpdated: Date;
+  lastUpdated: Date;
   updates: Update[];
 }
