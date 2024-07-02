@@ -17,7 +17,7 @@
       transition: border 100ms;
     }
 
-    & > .homeItemSummary {
+    & > .projectSummary {
       text-shadow: 0 0 0.5rem black;
       text-overflow: ellipsis;
 
@@ -58,7 +58,7 @@
         width: 100%;
       }
 
-      & > .homeItemSummary {
+      & > .projectSummary {
         position: absolute;
         inset: auto 1rem 1rem;
         padding: 2rem;
@@ -81,7 +81,7 @@
         flex: 1 0 0;
       }
 
-      & > .homeItemSummary {
+      & > .projectSummary {
         flex: 2 0 0;
         display: flex;
         flex-direction: column;
@@ -101,7 +101,7 @@
 
   &:hover {
     & > .homeItemContent {
-      & > .homeItemSummary > h3 {
+      & > .projectSummary > h3 {
         color: var(--text);
       }
 

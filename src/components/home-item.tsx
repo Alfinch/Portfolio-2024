@@ -96,15 +96,22 @@ export default function HomeItem(props: HomeItemProps) {
         }`}
       >
         <div className={styles.homeItemContent}>
-          <img src="placeholder.jpg" alt={"Image for " + props.project.title} />
-          <div className={styles.homeItemSummary}>
+          <img
+            src={`https://media.alfiewoodland.com/media/${props.project.image}.jpg`}
+            alt={"Image for " + props.project.title}
+          />
+          <div className={styles.projectSummary}>
             <h3>{props.project.title}</h3>
             {props.project.firstUpdated && (
               <h4>
-                <span>Started {props.project.firstUpdated.toLocaleDateString()}</span>
-                {props.layout === LayoutState.Grid && (<br />)}
+                <span>
+                  Started {props.project.firstUpdated.toLocaleDateString()}
+                </span>
+                {props.layout === LayoutState.Grid && <br />}
                 {props.layout === LayoutState.List && " - "}
-                <span>Updated {props.project.lastUpdated.toLocaleDateString()}</span>
+                <span>
+                  Updated {props.project.lastUpdated.toLocaleDateString()}
+                </span>
               </h4>
             )}
             {props.layout === LayoutState.List && (
