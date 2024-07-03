@@ -76,8 +76,10 @@ export default function HomePage() {
 
   return (
     <main ref={(ref) => setElement(ref)} className="main">
-      <h1>Alfie Woodland</h1>
-      <h2>Angular • Next.js • .NET</h2>
+      <div className="header">
+        <h1>Alfie Woodland</h1>
+        <h2>Angular • Next.js • .NET</h2>
+      </div>
       <LayoutButtons onChange={setLayout}></LayoutButtons>
       {projects.length === 0 && (
         <p className={styles.loading}>

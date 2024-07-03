@@ -50,8 +50,17 @@ export default function ProjectPage({ params }: { params: { id: number } }) {
 
   return (
     <main className="main">
-      <h1>{project?.title}</h1>
-      <h2>{project?.description}</h2>
+      <div
+        className="header withImage"
+        style={
+          {
+            "--background-image": `url('https://media.alfiewoodland.com/media/${project?.image}.jpg')`,
+          } as React.CSSProperties
+        }
+      >
+        <h1>{project?.title}</h1>
+        <h2>{project?.description}</h2>
+      </div>
       <div className={styles.navigation}>
         {canGoPrevious() && (
           <button type="button" onClick={previous} className={styles.previous}>
