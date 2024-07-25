@@ -164,4 +164,29 @@ ul {
     font-weight: bold;
     font-size: 2rem;
   }
+
+  & > img {
+    margin: 2rem -16rem;
+    width: 96rem;
+  }
+}
+
+@media screen and (width < 1280px) {
+  .article {
+    & > img {
+      display: block;
+      margin: 2rem 0;
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (width < 640px) {
+  .article {
+    & > img {
+      display: block;
+      margin: 2rem -4rem;
+      width: calc(100% + 8rem);
+    }
+  }
 }

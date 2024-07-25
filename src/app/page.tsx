@@ -74,7 +74,7 @@ export default function HomePage() {
     <main ref={(ref) => setElement(ref)} className="main">
       <div className="header">
         <h1>Alfie Woodland</h1>
-        <h2>Angular • Next.js • .NET</h2>
+        <h2>Angular • React • .NET</h2>
       </div>
       <LayoutButtons onChange={setLayout}></LayoutButtons>
       {projects.length === 0 && (
