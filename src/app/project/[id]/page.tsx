@@ -4,11 +4,8 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import ProjectService from "@/services/project-service";
 import { Project } from "@/types/project";
-import { Update } from "@/types/update";
 
 export default function ProjectPage({ params }: { params: { id: number } }) {
-  console.log(`Render Project: ${params.id}`);
-
   const [project, setProject] = useState<Project>();
   const [currentUpdate, setCurrentUpdate] = useState<number>(0);
 
@@ -44,7 +41,6 @@ export default function ProjectPage({ params }: { params: { id: number } }) {
   }, [project]);
 
   useEffect(() => {
-    console.log("i fire once");
     ProjectService.getProject(params.id).then((project) => setProject(project));
   }, []);
 
@@ -54,7 +50,7 @@ export default function ProjectPage({ params }: { params: { id: number } }) {
         className="header withImage"
         style={
           {
-            "--background-image": `url('https://media.alfiewoodland.com/media/${project?.image}.jpg')`,
+            "--background-image": `url('https://alfiewoodlandmedia.blob.core.windows.net/media/${project?.image}.jpg')`,
           } as React.CSSProperties
         }
       >

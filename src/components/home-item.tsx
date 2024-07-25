@@ -24,7 +24,6 @@ export default function HomeItem(props: HomeItemProps) {
   const bodyRef = useRef<Matter.Body>();
 
   const [element, setElement] = useState<HTMLDivElement | null>(null);
-  const [ghostElement, setGhostElement] = useState<HTMLDivElement | null>(null);
   const [dx, setDx] = useState(0);
   const [dy, setDy] = useState(0);
   const [rotation, setRotation] = useState(0);
@@ -36,17 +35,6 @@ export default function HomeItem(props: HomeItemProps) {
   //   if (bodyRef.current !== undefined) {
   //     matter.removeBody(bodyRef.current);
   //     bodyRef.current = undefined;
-  //   }
-
-  //   if (ghostElement !== null) {
-  //     const { x, y, width, height } = ghostElement.getBoundingClientRect();
-  //     const newDx = x + width / 2 - props.offset.x;
-  //     const newDy = y + height / 2 - props.offset.y;
-  //     if (newDx !== dx || newDy !== dy) {
-  //       console.log(`Position HomeItem: ${props.id}`);
-  //       setDx(newDx);
-  //       setDy(newDy);
-  //     }
   //   }
   // }
 
@@ -88,16 +76,10 @@ export default function HomeItem(props: HomeItemProps) {
 
   return (
     <Link href={"/project/" + props.project.id} className={styles.homeItemLink}>
-      <div
-        className={`${styles.homeItem} ${
-          { grid: styles.grid, list: styles.list, chaos: styles.chaos }[
-            props.layout
-          ]
-        }`}
-      >
+      <div className={`${styles.homeItem} ${styles[props.layout]}`}>
         <div className={styles.homeItemContent}>
           <img
-            src={`https://media.alfiewoodland.com/media/${props.project.image}.jpg`}
+            src={`https://alfiewoodlandmedia.blob.core.windows.net/media/${props.project.image}.jpg`}
             alt={"Image for " + props.project.title}
           />
           <div className={styles.projectSummary}>
@@ -119,6 +101,17 @@ export default function HomeItem(props: HomeItemProps) {
             )}
           </div>
         </div>
+        {/* {props.layout === LayoutState.List && (
+          <div className={styles.homeItemUpdates}>
+            {props.project.updates.map((update) => (
+              <div key={update.id} className={styles.homeItemUpdate}>
+                <h3>{update.title}</h3>
+                <h4>{update.date.toLocaleDateString()}</h4>
+                <p>{update.body}</p>
+              </div>
+            ))}
+          </div>
+        )} */}
       </div>
     </Link>
   );

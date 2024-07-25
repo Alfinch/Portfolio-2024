@@ -12,8 +12,6 @@ import { MatterContext } from "../contexts/matter-context";
 import HomeItem from "../components/home-item";
 
 export default function HomePage() {
-  console.log("Render Home");
-
   const matterRef = useRef(new MatterService());
 
   const [projects, setProjects] = useState<Project[]>([]);
@@ -38,8 +36,6 @@ export default function HomePage() {
 
   useEffect(() => {
     if (element === null || layout !== LayoutState.Chaos) return;
-
-    console.log("Home starting matter physics");
 
     const matter = matterRef.current;
 
@@ -87,13 +83,7 @@ export default function HomePage() {
         </p>
       )}
       <MatterContext.Provider value={matterRef.current}>
-        <div
-          className={`${styles.homeItems} ${
-            { grid: styles.grid, list: styles.list, chaos: styles.chaos }[
-              layout
-            ]
-          }`}
-        >
+        <div className={`${styles.homeItems} ${styles[layout]}`}>
           {projects.map((project) => (
             <HomeItem
               key={project.id}

@@ -34,9 +34,6 @@ export default class MatterService {
   }
 
   addBody(x: number, y: number): Body {
-    x -= this.offsetX;
-    y -= this.offsetY;
-
     const options = {
       restitution: 0.8,
     };
@@ -65,7 +62,7 @@ export default class MatterService {
 
   private isStarted = false;
   start() {
-    console.log("Matter start");
+    console.debug("Matter start");
     this.isStarted = true;
     const updateOnNextFrame = () => {
       window.requestAnimationFrame(() => {
@@ -79,14 +76,14 @@ export default class MatterService {
   }
 
   stop() {
-    console.log("Matter stop");
+    console.debug("Matter stop");
     this.isStarted = false;
   }
 
   private previousUpdate: number = performance.now();
   private previousDelta: number | null = null;
   update() {
-    console.log("Matter update");
+    console.debug("Matter update");
     const update = performance.now();
     const delta = update - this.previousUpdate;
     const correction =
@@ -150,14 +147,6 @@ export default class MatterService {
     this.gravity.x = x;
     this.gravity.y = y;
     this.wake();
-  }
-
-  private offsetX = 0;
-  private offsetY = 0;
-  setOffset(offsetX: number, offsetY: number) {
-    console.log("MatterService.setOffset", { offsetX, offsetY });
-    this.offsetX = offsetX;
-    this.offsetY = offsetY;
   }
 
   private orientation: number = 0;
