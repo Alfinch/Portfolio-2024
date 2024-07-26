@@ -23,6 +23,7 @@ html {
   --secondary-text: color-mix(in srgb, var(--secondary) 80%, var(--text));
   --error: #fb3342;
   --error-text: color-mix(in srgb, var(--error) 80%, var(--text));
+  --background-dark: #222222;
   --background: #333333;
   --neutral: #555555;
   --neutral-foreground: #aaaaaa;
@@ -168,6 +169,9 @@ ul {
   & > img {
     margin: 2rem -16rem;
     width: 96rem;
+    max-height: 80vh;
+    object-fit: contain;
+    background-color: var(--background-dark);
   }
 }
 
