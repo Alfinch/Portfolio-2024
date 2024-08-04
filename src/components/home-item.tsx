@@ -84,20 +84,20 @@ export default function HomeItem(props: HomeItemProps) {
           />
           <div className={styles.projectSummary}>
             <h3>{props.project.title}</h3>
-            {props.project.firstUpdated && (
-              <h4>
-                <span>
-                  Started {props.project.firstUpdated.toLocaleDateString()}
-                </span>
-                {props.layout === LayoutState.Grid && <br />}
-                {props.layout === LayoutState.List && " - "}
-                <span>
-                  Updated {props.project.lastUpdated.toLocaleDateString()}
-                </span>
-              </h4>
-            )}
             {props.layout === LayoutState.List && (
               <p>{props.project.description}</p>
+            )}
+            {props.project.firstUpdated && (
+              <h4>
+                {props.layout === LayoutState.List && (
+                  <span>
+                    {`Started\xa0${props.project.firstUpdated.toLocaleDateString()} - `}
+                  </span>
+                )}
+                <span>
+                  {`Updated\xa0${props.project.lastUpdated.toLocaleDateString()}`}
+                </span>
+              </h4>
             )}
           </div>
         </div>

@@ -38,7 +38,7 @@ export default function LayoutButtons({
         <rect className="fg" x="10" y="30" width="50" height="10" />
         <rect className="fg" x="10" y="50" width="50" height="10" />
       </LayoutButton>
-      <LayoutButton
+      {/* <LayoutButton
         active={layoutState === LayoutState.Chaos}
         label="chaos"
         onClick={() => setLayout(LayoutState.Chaos)}
@@ -79,7 +79,7 @@ export default function LayoutButtons({
           transform="rotate(10, 20, 50)"
         />
         <circle className="fg" cx="50" cy="50" r="10" />
-      </LayoutButton>
+      </LayoutButton> */}
     </div>
   );
 }

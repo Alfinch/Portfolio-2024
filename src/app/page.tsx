@@ -77,11 +77,7 @@ export default function HomePage() {
         <h2>Angular • React • .NET</h2>
       </div>
       <LayoutButtons onChange={setLayout}></LayoutButtons>
-      {projects.length === 0 && (
-        <p className={styles.loading}>
-          Please be patient as the machine awakens from its deep slumber...
-        </p>
-      )}
+      {projects.length === 0 && <p className="loading">Loading...</p>}
       <MatterContext.Provider value={matterRef.current}>
         <div className={`${styles.homeItems} ${styles[layout]}`}>
           {projects.map((project) => (

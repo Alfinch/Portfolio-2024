@@ -10,7 +10,6 @@
 
     & > img {
       display: block;
-      aspect-ratio: 1 / 1;
       object-fit: cover;
       background-color: var(--background);
       border: 1rem solid var(--neutral);
@@ -68,11 +67,13 @@
   }
 
   &.list {
+    margin: auto;
+    max-width: 64rem;
+
     & > .homeItemContent {
-      position: relative;
       display: flex;
       flex-direction: row;
-      justify-content: flex-start;
+      align-items: flex-start;
       gap: 2rem;
 
       & > img {
