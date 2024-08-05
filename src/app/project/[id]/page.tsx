@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import ProjectService from "@/services/project-service";
 import { Project } from "@/types/project";
+import Header from "@/components/header";
 
 export default function ProjectPage({ params }: { params: { id: number } }) {
   const [project, setProject] = useState<Project>();
@@ -49,18 +50,13 @@ export default function ProjectPage({ params }: { params: { id: number } }) {
       {!project && <p className="loading">Loading...</p>}
       {project && (
         <>
-          <div
-            className="header withImage"
-            style={
-              {
-                "--background-image": `url('https://alfiewoodlandmedia.blob.core.windows.net/media/${project?.image}.jpg')`,
-              } as React.CSSProperties
-            }
+          <Header
+            title={project?.title}
+            subtitle={project?.description}
+            image={project?.image}
           >
-            <a className="home" href="/"></a>
-            <h1>{project?.title}</h1>
-            <h2>{project?.description}</h2>
-          </div>
+            <a className={styles.homeLink} href="/"></a>
+          </Header>
           <div className={styles.navigation}>
             {canGoPrevious() && (
               <button

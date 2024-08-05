@@ -10,6 +10,7 @@ import ProjectService from "../services/project-service";
 import { Project } from "../types/project";
 import { MatterContext } from "../contexts/matter-context";
 import HomeItem from "../components/home-item";
+import Header from "@/components/header";
 
 export default function HomePage() {
   const matterRef = useRef(new MatterService());
@@ -72,10 +73,7 @@ export default function HomePage() {
 
   return (
     <main ref={(ref) => setElement(ref)} className="main">
-      <div className="header">
-        <h1>Alfie Woodland</h1>
-        <h2>Angular • React • .NET</h2>
-      </div>
+      <Header title="Alfie Woodland" subtitle="Angular • React • .NET"></Header>
       <LayoutButtons onChange={setLayout}></LayoutButtons>
       {projects.length === 0 && <p className="loading">Loading...</p>}
       <MatterContext.Provider value={matterRef.current}>
