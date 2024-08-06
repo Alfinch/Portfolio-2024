@@ -6,7 +6,7 @@ import ProjectService from "@/services/project-service";
 import { Project } from "@/types/project";
 import Header from "@/components/header";
 
-export default function ProjectPage({ params }: { params: { id: number } }) {
+export default function ProjectPage({ params }: { params: { slug: string } }) {
   const [project, setProject] = useState<Project>();
   const [currentUpdate, setCurrentUpdate] = useState<number>(0);
 
@@ -42,7 +42,7 @@ export default function ProjectPage({ params }: { params: { id: number } }) {
   }, [project]);
 
   useEffect(() => {
-    ProjectService.getProject(params.id).then((project) => setProject(project));
+    ProjectService.getProject(params.slug).then((project) => setProject(project));
   }, []);
 
   return (

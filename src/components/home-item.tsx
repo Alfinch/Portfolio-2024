@@ -75,7 +75,10 @@ export default function HomeItem(props: HomeItemProps) {
   // ]);
 
   return (
-    <Link href={"/project/" + props.project.id} className={styles.homeItemLink}>
+    <Link
+      href={"/project/" + props.project.slug}
+      className={styles.homeItemLink}
+    >
       <div className={`${styles.homeItem} ${styles[props.layout]}`}>
         <div className={styles.homeItemContent}>
           <img

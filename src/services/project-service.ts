@@ -3,8 +3,8 @@ import { Project } from "../types/project";
 const api = "https://api.alfiewoodland.com";
 
 export default abstract class ProjectService {
-  static async getProject(id: number): Promise<Project> {
-    return ProjectService.getJson<Project>(api + "/project/" + id);
+  static async getProject(slug: string): Promise<Project> {
+    return ProjectService.getJson<Project>(api + "/project/" + slug);
   }
 
   static async getProjects(): Promise<Project[]> {
