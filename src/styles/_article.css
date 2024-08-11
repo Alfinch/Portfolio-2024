@@ -1,0 +1,46 @@
+.article {
+  font-size: 1.6rem;
+  letter-spacing: 0.05rem;
+  line-height: 2.5rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  text-align: justify;
+  text-wrap: pretty;
+
+  & > * + * {
+    margin-top: 2rem;
+  }
+
+  & > h2 {
+    font-weight: bold;
+    font-size: 2rem;
+  }
+
+  & > img {
+    margin: 2rem -16rem;
+    width: 96rem;
+    max-height: 80vh;
+    object-fit: contain;
+    background-color: var(--background-dark);
+  }
+}
+
+@media screen and (width < 1280px) {
+  .article {
+    & > img {
+      display: block;
+      margin: 2rem 0;
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (width < 640px) {
+  .article {
+    & > img {
+      display: block;
+      margin: 2rem -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+}

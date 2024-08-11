@@ -1,6 +1,6 @@
 import { Viewport } from "next";
 import { Metadata } from "next";
-import "./globals.css";
+import "../styles/globals.css";
 import styles from "./layout.module.css";
 
 export const viewport: Viewport = {
@@ -19,13 +19,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
-        <div className={styles.layout}>
-          <div className={styles.sidePanel}></div>
-          {children}
-          <div className={styles.sidePanel}></div>
-        </div>
+    <html lang="en" className={styles.html}>
+      <body className={styles.body}>
+        <main className={styles.main}>{children}</main>
       </body>
     </html>
   );

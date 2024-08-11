@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import ProjectService from "@/services/project-service";
 import { Project } from "@/types/project";
 import Header from "@/components/header";
+import Loading from "@/components/loading";
 
 export default function ProjectPage({ params }: { params: { slug: string } }) {
   const [project, setProject] = useState<Project>();
@@ -42,65 +43,54 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
   }, [project]);
 
   useEffect(() => {
-    ProjectService.getProject(params.slug).then((project) => setProject(project));
+    ProjectService.getProject(params.slug).then((project) =>
+      setProject(project)
+    );
   }, []);
 
   return (
-    <main className="main">
-      {!project && <p className="loading">Loading...</p>}
-      {project && (
-        <>
-          <Header
-            title={project?.title}
-            subtitle={project?.description}
-            image={project?.image}
-          >
-            <a className={styles.homeLink} href="/"></a>
-          </Header>
-          <div className={styles.navigation}>
-            {canGoPrevious() && (
-              <button
-                type="button"
-                onClick={previous}
-                className={styles.previous}
-              >
-                Previous: {project?.updates[currentUpdate - 1]?.title ?? ""}
-              </button>
-            )}
-            <h1>{project?.updates[currentUpdate]?.title ?? ""}</h1>
-            <h2>
-              {project?.updates[currentUpdate]?.date.toLocaleDateString() ?? ""}
-            </h2>
-            {canGoNext() && (
-              <button type="button" onClick={next} className={styles.next}>
-                Next: {project?.updates[currentUpdate + 1]?.title ?? ""}
-              </button>
-            )}
-          </div>
-          <article
-            className="article"
-            dangerouslySetInnerHTML={{
-              __html: project?.updates[currentUpdate]?.body ?? "",
-            }}
-          ></article>
-          <div className={styles.footNavigation}>
-            {canGoPrevious() && (
-              <button
-                type="button"
-                onClick={previous}
-                className={styles.previous}
-              >
-                Previous: {project?.updates[currentUpdate - 1]?.title ?? ""}
-              </button>
-            )}
-            {canGoNext() && (
-              <button type="button" onClick={next} className={styles.next}>
-                Next: {project?.updates[currentUpdate + 1]?.title ?? ""}
-              </button>
-            )}
-          </div>
-        </>
-      )}
-    </main>
+    <Loading isLoading={!project}>
+      <Header
+        title={project?.title ?? ""}
+        subtitle={project?.description ?? ""}
+        image={project?.image}
+      >
+        <a className={styles.homeLink} href="/"></a>
+      </Header>
+      <div className={styles.navigation}>
+        {canGoPrevious() && (
+          <button type="button" onClick={previous} className={styles.previous}>
+            Previous: {project?.updates[currentUpdate - 1]?.title ?? ""}
+          </button>
+        )}
+        <h1>{project?.updates[currentUpdate]?.title ?? ""}</h1>
+        <h2>
+          {project?.updates[currentUpdate]?.date.toLocaleDateString() ?? ""}
+        </h2>
+        {canGoNext() && (
+          <button type="button" onClick={next} className={styles.next}>
+            Next: {project?.updates[currentUpdate + 1]?.title ?? ""}
+          </button>
+        )}
+      </div>
+      <article
+        className="article"
+        dangerouslySetInnerHTML={{
+          __html: project?.updates[currentUpdate]?.body ?? "",
+        }}
+      ></article>
+      <div className={styles.footNavigation}>
+        {canGoPrevious() && (
+          <button type="button" onClick={previous} className={styles.previous}>
+            Previous: {project?.updates[currentUpdate - 1]?.title ?? ""}
+          </button>
+        )}
+        {canGoNext() && (
+          <button type="button" onClick={next} className={styles.next}>
+            Next: {project?.updates[currentUpdate + 1]?.title ?? ""}
+          </button>
+        )}
+      </div>
+    </Loading>
   );
 }

@@ -14,6 +14,11 @@
       background-color: var(--background);
       border: 1rem solid var(--neutral);
       transition: border 100ms;
+      max-width: 100%;
+      height: auto;
+      aspect-ratio: 1/1;
+      /* hide alt text while loading */
+      font-size: 0;
     }
 
     & > .projectSummary {

@@ -1,0 +1,23 @@
+button {
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+a {
+  color: var(--secondary-text);
+}
+
+a:visited {
+  color: var(--primary-text);
+}
+
+ul {
+  list-style: disc;
+  padding-left: 2rem;
+
+  & > li + li {
+    margin-top: 1rem;
+  }
+}

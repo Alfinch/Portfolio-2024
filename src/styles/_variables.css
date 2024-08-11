@@ -1,0 +1,13 @@
+html {
+    --text: #ffffff;
+    --primary: #7936c9;
+    --primary-text: color-mix(in srgb, var(--primary) 80%, var(--text));
+    --secondary: rgb(35, 120, 148);
+    --secondary-text: color-mix(in srgb, var(--secondary) 80%, var(--text));
+    --error: #fb3342;
+    --error-text: color-mix(in srgb, var(--error) 80%, var(--text));
+    --background-dark: #222222;
+    --background: #333333;
+    --neutral: #555555;
+    --neutral-foreground: #aaaaaa;
+  }

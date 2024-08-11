@@ -11,6 +11,7 @@ import { Project } from "../types/project";
 import { MatterContext } from "../contexts/matter-context";
 import HomeItem from "../components/home-item";
 import Header from "@/components/header";
+import Loading from "@/components/loading";
 
 export default function HomePage() {
   const matterRef = useRef(new MatterService());
@@ -72,10 +73,9 @@ export default function HomePage() {
   }, [element, layout]);
 
   return (
-    <main ref={(ref) => setElement(ref)} className="main">
+    <Loading isLoading={projects.length === 0}>
       <Header title="Alfie Woodland" subtitle="Angular • React • .NET"></Header>
       <LayoutButtons onChange={setLayout}></LayoutButtons>
-      {projects.length === 0 && <p className="loading">Loading...</p>}
       <MatterContext.Provider value={matterRef.current}>
         <div className={`${styles.homeItems} ${styles[layout]}`}>
           {projects.map((project) => (
@@ -87,6 +87,6 @@ export default function HomePage() {
           ))}
         </div>
       </MatterContext.Provider>
-    </main>
+    </Loading>
   );
 }
