@@ -1,8 +1,6 @@
 import { Viewport, Metadata } from "next";
 import "../styles/globals.css";
 import styles from "./layout.module.css";
-import Head from "next/head";
-import { CSP } from "@/config";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -21,9 +19,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={styles.html}>
-      <Head>
-        <meta http-equiv="Content-Security-Policy" content={CSP} />
-      </Head>
       <body className={styles.body}>
         <main className={styles.main}>{children}</main>
       </body>
